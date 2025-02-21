@@ -2,21 +2,21 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import os
 
-# Check if service account file exists
-if not os.path.exists("serviceAccountKey.json"):
-    print("❌ Firebase credentials file 'serviceAccountKey.json' is missing!")
+# Absolute path to the service account file
+service_account_path = os.path.abspath("serviceAccountKey.json")
+
+if not os.path.exists(service_account_path):
+    print(f"❌ Firebase credentials file '{service_account_path}' is missing!")
     exit(1)
 
 try:
-    # Initialize Firebase with service account JSON
-    cred = credentials.Certificate("serviceAccountKey.json")
+    cred = credentials.Certificate(service_account_path)
     firebase_admin.initialize_app(cred)
     db = firestore.client()
 
-    # Update attendance collection: Mark all records as "absent"
     attendance_ref = db.collection("attendance")
-    
     docs = attendance_ref.get()
+    
     for doc in docs:
         attendance_ref.document(doc.id).update({"attendance": "absent"})
     
