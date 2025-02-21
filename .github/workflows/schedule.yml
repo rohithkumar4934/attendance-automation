@@ -23,7 +23,7 @@ jobs:
       - name: Write credentials to file
         run: |
           echo "$GOOGLE_APPLICATION_CREDENTIALS" > serviceAccountKey.json
-          cat serviceAccountKey.json  # Debugging line to verify the file content
+          cat serviceAccountKey.json  # This will print the content to the logs for debugging
 
       - name: Run Firestore update script
         env:
