@@ -7,7 +7,7 @@ on:
 
 jobs:
   update_attendance:
-    runs-on: windows-latest  # Windows environment
+    runs-on: ubuntu-latest  # Windows environment
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
