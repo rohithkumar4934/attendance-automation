@@ -1,0 +1,28 @@
+name: Update Firestore Attendance
+
+on:
+  schedule:
+    - cron: '00 18 * * *'  # Runs at 11:30 PM IST (18:00 UTC)
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  update_attendance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: pip install firebase-admin
+
+      - name: Run Firestore update script
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_KEY }}
+        run: |
+          echo "$GOOGLE_APPLICATION_CREDENTIALS" > serviceAccountKey.json
+          python update_attendance.py
