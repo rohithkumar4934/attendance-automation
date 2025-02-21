@@ -2,12 +2,12 @@ name: Update Firestore Attendance
 
 on:
   schedule:
-    - cron: '19 7 * * *'  # Runs at 12:05 PM IST (06:35 UTC)
+    - cron: '35 6 * * *'  # Runs at 12:05 PM IST (06:35 UTC)
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
   update_attendance:
-    runs-on: ubuntu-latest # Windows environment
+    runs-on: ubuntu-latest  # Ensure it runs on a Linux environment
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -22,7 +22,7 @@ jobs:
 
       - name: Write credentials to file
         run: |
-          $env:GOOGLE_APPLICATION_CREDENTIALS | Out-File -FilePath serviceAccountKey.json -Encoding utf8
+          echo "$GOOGLE_APPLICATION_CREDENTIALS" > serviceAccountKey.json
 
       - name: Run Firestore update script
         env:
