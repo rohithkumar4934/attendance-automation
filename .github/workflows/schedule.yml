@@ -2,7 +2,7 @@ name: Update Firestore Attendance
 
 on:
   schedule:
-    - cron: '54 7 * * *'  # Runs at 12:05 PM IST (06:35 UTC)
+    - cron: '05 8 * * *'  # Runs at 12:05 PM IST (06:35 UTC)
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
