@@ -2,13 +2,12 @@ name: Update Firestore Attendance
 
 on:
   schedule:
-    - cron: '52 6 * * *'  # Runs at 12:05 PM IST (06:35 UTC)
+    - cron: '10 7 * * *'  # Runs at 12:05 PM IST (06:35 UTC)
   workflow_dispatch:  # Allows manual trigger
-
 
 jobs:
   update_attendance:
-    runs-on: windows-latest
+    runs-on: windows-latest  # Windows environment
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -21,9 +20,12 @@ jobs:
       - name: Install dependencies
         run: pip install firebase-admin
 
+      - name: Write credentials to file
+        run: |
+          $env:GOOGLE_APPLICATION_CREDENTIALS | Out-File -FilePath serviceAccountKey.json -Encoding utf8
+
       - name: Run Firestore update script
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_KEY }}
         run: |
-          echo "$GOOGLE_APPLICATION_CREDENTIALS" > serviceAccountKey.json
           python update_attendance.py
